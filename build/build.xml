@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<project default="create_jar">
+
+	<target name="init">
+		<delete dir="classes" />
+		
+		<mkdir dir="classes" />
+		<mkdir dir="dist" />
+	</target>
+	
+	<target name="compile" depends="init">
+		<javac srcdir="../src" destdir="classes" includeAntRuntime="false"/>
+	</target>
+	
+    <target name="create_jar" depends="compile">
+		<java classname="it.rokudo.commons.tools.SXJarLoader.SXVersion" classpath="classes" outputproperty="appVersion" failonerror="true" />
+
+        <jar destfile="dist/SXJarLoader_${appVersion}.jar">
+            <fileset dir="classes"/>
+        </jar>
+    	
+		<delete dir="classes" />
+    </target>
+	
+</project>

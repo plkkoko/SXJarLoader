@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<project default="create_jar" name="Create Runnable Jar with Jar-in-Jar Loader">
+
+	<target name="init">
+		<delete dir="classes" />
+		<mkdir dir="classes" />
+		<mkdir dir="../Distribution" />
+	</target>
+	
+	<target name="compile" depends="init">
+		<path id="libPath">
+		  <fileset dir="../lib">
+		    <include name="*.jar"/>
+		  </fileset>
+		</path>
+
+		<javac srcdir="../src" destdir="classes" includeAntRuntime="false">
+			<classpath refid="libPath"/>
+		</javac>
+	</target>
+		
+    <target name="create_jar"  depends="compile">
+		<java classname="it.ats.isp.xml.SXVersion" classpath="../bin" outputproperty="appVersion" failonerror="true" />
+
+        <jar destfile="../Distribution/bin/XMLEngine.jar">
+           <zipfileset src="SXJarLoader_1.0.2.jar"/>
+           <manifest>
+                <attribute name="Main-Class" value="it.rokudo.commons.tools.SXJarLoader.SXJarLoader"/>
+                <attribute name="Real-Main-Class" value="it.ats.isp.xml.Main"/>
+            </manifest>
+            <fileset dir="classes"/>
+            <zipfileset dir="../lib" includes="*.jar" prefix="lib/"/>
+        </jar>
+
+    	<zip destfile="../Distribution ${appVersion}.zip" basedir="../Distribution"/>
+    	
+		<delete dir="classes" />
+    </target>
+	
+</project>
