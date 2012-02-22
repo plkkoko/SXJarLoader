@@ -1,5 +1,5 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<project default="create_jar" name="Create Runnable Jar with Jar-in-Jar Loader">
+<?xml version="1.0" encoding="UTF-8"?>
+<project default="create_jar">
 
 	<target name="init">
 		<delete dir="classes" />
@@ -20,13 +20,13 @@
 	</target>
 		
     <target name="create_jar"  depends="compile">
-		<java classname="it.ats.isp.xml.SXVersion" classpath="../bin" outputproperty="appVersion" failonerror="true" />
+		<java classname="class.path.to.SXVersion" classpath="../bin" outputproperty="appVersion" failonerror="true" />
 
         <jar destfile="../Distribution/bin/XMLEngine.jar">
            <zipfileset src="SXJarLoader_1.0.2.jar"/>
            <manifest>
                 <attribute name="Main-Class" value="it.rokudo.commons.tools.SXJarLoader.SXJarLoader"/>
-                <attribute name="Real-Main-Class" value="it.ats.isp.xml.Main"/>
+                <attribute name="Real-Main-Class" value="my.real.class.path"/>
             </manifest>
             <fileset dir="classes"/>
             <zipfileset dir="../lib" includes="*.jar" prefix="lib/"/>
